@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1048588155882",
+    "project_id": "sleep-manager-ddde0",
+    "storage_bucket": "sleep-manager-ddde0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1048588155882:android:9ec83e975b0c137aa11093",
+        "android_client_info": {
+          "package_name": "com.example.sleep_manager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfHVU7gB5AirrSF2uv49CYLfD-q2c_82E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
