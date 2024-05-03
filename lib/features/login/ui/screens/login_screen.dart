@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:sleep_manager/features/login/logic/cubit/cubit/login_cubit.dart';
@@ -10,7 +8,7 @@ import 'package:sleep_manager/features/login/ui/widgets/my_input_field.dart';
 import 'package:sleep_manager/features/login/ui/widgets/signup_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -21,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController passwordController;
   late TextEditingController signupEmailController;
   late TextEditingController signupPasswordController;
+
   @override
   void initState() {
     super.initState();
@@ -46,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 30,
               ),
               Row(
-                children: [
+                children: const [
                   Text(
                     'Welcome back! ',
                     style: TextStyle(
@@ -88,8 +87,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 onPressed: () {
-                  print(emailController.text);
                   context.read<LoginCubit>().login();
+                  emailController.clear();
+                  passwordController.clear();
                   context.read<LoginCubit>().isLoggedin()
                       ? Navigator.pushNamed(context, '/Home')
                       : null;
