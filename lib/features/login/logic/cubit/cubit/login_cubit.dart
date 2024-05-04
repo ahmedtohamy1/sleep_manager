@@ -8,22 +8,26 @@ part 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this.firebaseHelper) : super(LoginInitial());
   final FirebaseHelper firebaseHelper;
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController signupEmailController = TextEditingController();
-  TextEditingController signupPasswordController = TextEditingController();
 
-  login() async {
-    await firebaseHelper.loginUser(
-        emailController.text.trim(), passwordController.text.trim());
+  login(String Email, String Password) async {
+    await firebaseHelper.loginUser(Email.trim(), Password.trim());
   }
 
-  signup() async {
-    await firebaseHelper.signUpUser(signupEmailController.text.trim(),
-        signupPasswordController.text.trim());
+  signup(String Email, String Password) async {
+    await firebaseHelper.signUpUser(Email.trim(), Password.trim());
+  }
+
+  // log out
+  logout() async {
+    await firebaseHelper.logout();
   }
 
   isLoggedin() {
     return firebaseHelper.isLoggedIn();
+  }
+
+  // forgot password
+  forgotPassword(String email) async {
+    await firebaseHelper.forgotPassword(email.trim());
   }
 }

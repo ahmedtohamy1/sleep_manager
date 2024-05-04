@@ -13,6 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.5
+  get_it: ^7.7.0
   google_fonts: ^6.2.1
   shadcn_ui: ^0.4.3
 

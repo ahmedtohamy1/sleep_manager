@@ -1,11 +1,10 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:sleep_manager/features/login/logic/cubit/cubit/login_cubit.dart';
-import 'package:sleep_manager/features/login/ui/widgets/my_input_field.dart';
-import 'package:sleep_manager/features/login/ui/widgets/signup_dialog.dart';
+import 'package:sleep_manager/features/login/ui/widgets/dont_have_an_account.dart';
+import 'package:sleep_manager/features/login/ui/widgets/forgot_password.dart';
+import 'package:sleep_manager/features/login/ui/widgets/login_button.dart';
+import 'package:sleep_manager/features/login/ui/widgets/email_password_form.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,16 +18,16 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController passwordController;
   late TextEditingController signupEmailController;
   late TextEditingController signupPasswordController;
+  late TextEditingController forgotPasswordEmailController;
 
   @override
   void initState() {
     super.initState();
-    emailController = context.read<LoginCubit>().emailController;
-    passwordController = context.read<LoginCubit>().passwordController;
-
-    signupEmailController = context.read<LoginCubit>().signupEmailController;
-    signupPasswordController =
-        context.read<LoginCubit>().signupPasswordController;
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    forgotPasswordEmailController = TextEditingController();
+    signupEmailController = TextEditingController();
+    signupPasswordController = TextEditingController();
   }
 
   @override
@@ -62,86 +61,28 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 16,
               ),
-              MyInputField(
-                  controller: emailController,
-                  id: 'email',
-                  hint: 'Enter Your Email',
-                  label: 'Email',
-                  isObscure: false),
-              MyInputField(
-                controller: passwordController,
-                id: 'password',
-                hint: 'Enter Your Password',
-                label: 'Password',
-                isObscure: true,
+              EmailPasswordForm(
+                  emailController: emailController,
+                  passwordController: passwordController),
+              SizedBox(
+                height: 16,
+              ),
+              LoginButton(
+                emailController: emailController,
+                passwordController: passwordController,
               ),
               SizedBox(
                 height: 16,
               ),
-              ShadButton(
-                size: ShadButtonSize.lg,
-                text: const Text(
-                  'Login',
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-                onPressed: () {
-                  context.read<LoginCubit>().login();
-                  emailController.clear();
-                  passwordController.clear();
-                  context.read<LoginCubit>().isLoggedin()
-                      ? Navigator.pushNamed(context, '/Home')
-                      : null;
-                },
-              ),
+              DontHaveAnAccount(
+                  signupEmailController: signupEmailController,
+                  signupPasswordController: signupPasswordController),
               SizedBox(
                 height: 16,
               ),
-              ShadAlert(
-                iconSrc: LucideIcons.messageCircleQuestion,
-                title: Text('Do not have an account?!'),
-                description: Row(
-                  children: [
-                    Text('Register from '),
-                    GestureDetector(
-                      onTap: () {
-                        Signup().SignupDialog(context, signupEmailController,
-                            signupPasswordController);
-                      },
-                      child: Text(
-                        "here!",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 22, 150, 255),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              ShadAlert(
-                iconSrc: LucideIcons.refreshCcwDot,
-                title: Text('Forgot Password?!'),
-                description: Row(
-                  children: [
-                    Text('Reset Password from '),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Text(
-                        "here!",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 22, 150, 255),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              ForgotPassword(
+                forgotPasswordEmailController: forgotPasswordEmailController,
+              )
             ],
           ),
         ),

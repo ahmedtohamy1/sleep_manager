@@ -5,6 +5,7 @@ import 'package:sleep_manager/core/helpers/firebase_helper.dart';
 import 'package:sleep_manager/features/home/ui/screens/home_screen.dart';
 import 'package:sleep_manager/features/login/logic/cubit/cubit/login_cubit.dart';
 import 'package:sleep_manager/features/login/ui/screens/login_screen.dart';
+import 'package:sleep_manager/loginorhome.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -21,15 +22,11 @@ class MyApp extends StatelessWidget {
           colorScheme: const ShadRedColorScheme.dark(),
         ),
         themeMode: ThemeMode.dark,
-        home: const Scaffold(
-          body: Center(
-            child: Text('Hello World!'),
-          ),
-        ),
-        initialRoute: '/Login',
+        home: const LoginOrHome(),
         routes: {
-          '/Login': (context) => LoginScreen(),
-          '/Home': (context) => HomeScreen(),
+          '/LoginOrHome': (context) => const LoginOrHome(),
+          '/Login': (context) => const LoginScreen(),
+          '/Home': (context) => const HomeScreen(),
         },
       ),
     );

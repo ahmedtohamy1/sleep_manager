@@ -20,4 +20,9 @@ class FirebaseHelper {
   Future logout() async {
     await auth.signOut();
   }
+
+  // forgot password method
+  Future forgotPassword(String email) async {
+    await auth.sendPasswordResetEmail(email: email);
+  }
 }

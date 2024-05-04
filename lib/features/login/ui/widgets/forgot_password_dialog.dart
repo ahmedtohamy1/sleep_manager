@@ -3,17 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:sleep_manager/features/login/logic/cubit/cubit/login_cubit.dart';
 
-class Signup {
-  Future<dynamic> SignupDialog(
+class ForgotPasswordWidget {
+  Future<dynamic> ForgotPasswordDialog(
     BuildContext context,
     TextEditingController emailContrlr,
-    TextEditingController passContrlr,
   ) {
     return showShadDialog(
       context: context,
       builder: (context) => ShadDialog(
-        title: const Text('SignUp New User'),
-        description: const Text("Make new account in app."),
+        title: const Text('Reset Your Password'),
+        // description: const Text("Make new account in app."),
         content: Container(
           width: 375,
           padding: const EdgeInsets.symmetric(vertical: 20),
@@ -39,37 +38,15 @@ class Signup {
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Password',
-                        style: Theme.of(context).textTheme.labelMedium,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      flex: 3,
-                      child: ShadInput(
-                        controller: passContrlr,
-                      ),
-                    ),
-                  ],
-                ),
               ]),
         ),
         actions: [
           ShadButton(
             text: const Text('Save changes'),
             onPressed: () {
-              context.read<LoginCubit>().signup(
-                    emailContrlr.text,
-                    passContrlr.text,
-                  );
+              context.read<LoginCubit>().forgotPassword(emailContrlr.text);
               Navigator.of(context).pop();
               emailContrlr.clear();
-              passContrlr.clear();
             },
           )
         ],
@@ -78,14 +55,9 @@ class Signup {
   }
 }
 
-final signup = [
+final ForgotPasswordMap = [
   (
     title: 'Email',
     value: '',
   ),
-  (
-    title: 'Password',
-    value: '',
-  ),
-  (title: 'ReEnter Password', value: ''),
 ];
