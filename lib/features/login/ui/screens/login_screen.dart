@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sleep_manager/features/login/logic/cubit/cubit/login_cubit.dart';
 import 'package:sleep_manager/features/login/ui/widgets/dont_have_an_account.dart';
 import 'package:sleep_manager/features/login/ui/widgets/forgot_password.dart';
 import 'package:sleep_manager/features/login/ui/widgets/login_button.dart';
@@ -18,6 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController passwordController;
   late TextEditingController signupEmailController;
   late TextEditingController signupPasswordController;
+  late TextEditingController signupNameController;
+  late TextEditingController signupNumberController;
   late TextEditingController forgotPasswordEmailController;
 
   @override
@@ -28,6 +32,8 @@ class _LoginScreenState extends State<LoginScreen> {
     forgotPasswordEmailController = TextEditingController();
     signupEmailController = TextEditingController();
     signupPasswordController = TextEditingController();
+    signupNameController = TextEditingController();
+    signupNumberController = TextEditingController();
   }
 
   @override
@@ -70,13 +76,21 @@ class _LoginScreenState extends State<LoginScreen> {
               LoginButton(
                 emailController: emailController,
                 passwordController: passwordController,
+                onPressed: () {
+                  context
+                      .read<LoginCubit>()
+                      .login(emailController.text, passwordController.text);
+                },
               ),
               SizedBox(
                 height: 16,
               ),
               DontHaveAnAccount(
-                  signupEmailController: signupEmailController,
-                  signupPasswordController: signupPasswordController),
+                signupEmailController: signupEmailController,
+                signupPasswordController: signupPasswordController,
+                signupNameController: signupNameController,
+                signupNumberController: signupNumberController,
+              ),
               SizedBox(
                 height: 16,
               ),

@@ -8,6 +8,7 @@ class LoginButton extends StatelessWidget {
     super.key,
     required this.emailController,
     required this.passwordController,
+    required void Function() onPressed,
   });
 
   final TextEditingController emailController;

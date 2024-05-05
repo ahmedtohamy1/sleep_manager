@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -15,8 +17,10 @@ class LoginCubit extends Cubit<LoginState> {
     await firebaseHelper.addDocWakeAt("");
   }
 
-  signup(String Email, String Password) async {
-    await firebaseHelper.signUpUser(Email.trim(), Password.trim());
+  signup(String Email, String Password, String Name, String Number,
+      File Img) async {
+    await firebaseHelper.signUpUser(
+        Email.trim(), Password.trim(), Name, Number, Img);
   }
 
   // log out

@@ -37,28 +37,33 @@ class _AvatarNameAdviceState extends State<AvatarNameAdvice> {
     }
 
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const CircleAvatar(
-            radius: 35,
-            backgroundImage: NetworkImage(
-                'https://t4.ftcdn.net/jpg/00/96/48/11/360_F_96481143_EDJRxhplkTUrdgXE4R45XAX0cHFr8QTC.jpg')),
-        const SizedBox(
-          width: 15,
-        ),
-        const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Row(
           children: [
-            Text(
-              "Good Night",
-              style: TextStyle(fontSize: 20),
+            const CircleAvatar(
+                radius: 35,
+                backgroundImage: NetworkImage(
+                    'https://t4.ftcdn.net/jpg/00/96/48/11/360_F_96481143_EDJRxhplkTUrdgXE4R45XAX0cHFr8QTC.jpg')),
+            const SizedBox(
+              width: 15,
             ),
-            Text(
-              "Sleep Well",
-              style: TextStyle(fontSize: 20),
+            const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Good Night",
+                  style: TextStyle(fontSize: 20),
+                ),
+                Text(
+                  "Sleep Well",
+                  style: TextStyle(fontSize: 20),
+                ),
+              ],
             ),
+            const SizedBox(width: 10),
           ],
         ),
-        const SizedBox(width: 75),
         InkWell(
           splashColor: Colors.transparent,
           onTap: () {

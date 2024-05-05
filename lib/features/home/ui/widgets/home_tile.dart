@@ -28,13 +28,16 @@ class HomeTile extends StatelessWidget {
             Icon(
               icon,
               size: 50,
+              color: const Color.fromARGB(255, 255, 94, 83),
             ),
             const SizedBox(
               height: 16,
             ),
-            Text(
-              title,
-              style: const TextStyle(fontSize: 20),
+            Center(
+              child: Text(
+                title,
+                style: const TextStyle(fontSize: 20),
+              ),
             ),
           ],
         ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:sleep_manager/features/home/ui/screens/home.dart';
 import 'package:sleep_manager/features/profile/ui/screens/profile_screen.dart';
-import 'package:sleep_manager/features/settings/ui/screens/settings_screen.dart';
 import 'package:sleep_manager/features/weather/ui/screens/weather_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,8 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> screens = [
     const Home(),
     const WeatherScreen(),
-    const ProfileScreen(),
-    const SettingsScreen(),
+    ProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {
