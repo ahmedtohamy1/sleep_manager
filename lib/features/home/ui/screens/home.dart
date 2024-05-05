@@ -9,6 +9,7 @@ import 'package:sleep_manager/features/home/logic/cubit/wanted_time_to_wake_cubi
 import 'package:sleep_manager/features/home/ui/widgets/avatar_name_advice.dart';
 import 'package:sleep_manager/features/home/ui/widgets/goal_container.dart';
 import 'package:sleep_manager/features/home/ui/widgets/home_tile.dart';
+import 'package:sleep_manager/features/login/logic/cubit/cubit/login_cubit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 extension DateTimeExtension on DateTime {
@@ -88,6 +89,11 @@ class _HomeState extends State<Home> {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
+          ShadButton(
+              icon: const Icon(LucideIcons.logOut),
+              onPressed: () {
+                context.read<LoginCubit>().logout();
+              }),
           const AvatarNameAdvice(),
           const SizedBox(
             height: 20,

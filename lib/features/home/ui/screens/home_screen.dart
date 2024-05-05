@@ -3,7 +3,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:sleep_manager/features/home/ui/screens/home.dart';
 import 'package:sleep_manager/features/profile/ui/screens/profile_screen.dart';
 import 'package:sleep_manager/features/settings/ui/screens/settings_screen.dart';
-import 'package:sleep_manager/features/stats/ui/screens/stats_screen.dart';
+import 'package:sleep_manager/features/weather/ui/screens/weather_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
   List<Widget> screens = [
     const Home(),
-    const StatsScreen(),
+    const WeatherScreen(),
     const ProfileScreen(),
     const SettingsScreen(),
   ];
@@ -45,10 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                LucideIcons.candlestickChart,
+                LucideIcons.cloudFog,
                 size: 30,
               ),
-              label: 'Statistics',
+              label: 'Weather',
             ),
             BottomNavigationBarItem(
               icon: Icon(
