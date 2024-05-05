@@ -8,14 +8,20 @@ environment:
 
 dependencies:
   bloc: ^8.1.4
+  cloud_firestore: ^4.17.2
+  crystal_navigation_bar: ^1.0.0
   firebase_auth: ^4.19.4
   firebase_core: ^2.30.1
+  fl_chart: ^0.67.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.5
   get_it: ^7.7.0
   google_fonts: ^6.2.1
+  intl: ^0.18.1
+  progress_line: ^0.1.0
   shadcn_ui: ^0.4.3
+  url_launcher: ^6.2.6
 
 dev_dependencies:
   flutter_lints: ^3.0.0

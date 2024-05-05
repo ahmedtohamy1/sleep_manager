@@ -11,6 +11,8 @@ class LoginCubit extends Cubit<LoginState> {
 
   login(String Email, String Password) async {
     await firebaseHelper.loginUser(Email.trim(), Password.trim());
+    await firebaseHelper.addDocSleepNow("");
+    await firebaseHelper.addDocWakeAt("");
   }
 
   signup(String Email, String Password) async {
