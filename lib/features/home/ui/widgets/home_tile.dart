@@ -36,7 +36,10 @@ class HomeTile extends StatelessWidget {
             Center(
               child: Text(
                 title,
-                style: const TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 20,
+                ),
               ),
             ),
           ],

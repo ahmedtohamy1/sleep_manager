@@ -1,5 +1,5 @@
-
 import 'package:bloc/bloc.dart';
+// ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 import 'package:sleep_manager/core/helpers/firebase_helper.dart';
 
@@ -14,7 +14,7 @@ class DbCubit extends Cubit<DbState> {
   }
 
   addDocWakeAt(String wakeAtTime) async {
-    await firebaseHelper.addDocSleepNow(wakeAtTime);
+    await firebaseHelper.addDocWakeAt(wakeAtTime);
   }
 
   //get times

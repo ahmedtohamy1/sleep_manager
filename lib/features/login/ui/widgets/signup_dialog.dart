@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:sleep_manager/features/login/logic/cubit/cubit/login_cubit.dart';
+
+import '../../logic/cubit/login_cubit.dart';
 
 class Signup {
   Future<dynamic> SignupDialog(

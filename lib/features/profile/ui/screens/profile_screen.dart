@@ -1,17 +1,15 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:sleep_manager/core/helpers/firebase_helper.dart';
-import 'package:sleep_manager/features/login/logic/cubit/cubit/login_cubit.dart';
+import 'package:sleep_manager/features/login/logic/cubit/login_cubit.dart';
 import 'package:sleep_manager/features/profile/ui/widgets/profile_card.dart';
 import 'package:sleep_manager/features/settings/ui/screens/settings_screen.dart';
+import 'package:sleep_manager/loginorhome.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key? key});
@@ -49,13 +47,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       icon: const Icon(LucideIcons.logOut),
                       onPressed: () {
                         context.read<LoginCubit>().logout();
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) {
+                          return const LoginOrHome();
+                        }));
                       }),
                   IconButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => SettingsScreen()));
+                            builder: (context) => const SettingsScreen()));
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         LucideIcons.settings2,
                         size: 30,
                       ))
@@ -65,7 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 future: getUrl(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
@@ -84,12 +86,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             if (pickedFile != null) {
                               img = File(
                                   pickedFile.path); // Convert XFile to File
+
+                              // Update profile image in Firebase storage
+                              await FirebaseHelper().updateProfileImage(img!);
+
+                              // Update Firebase storage reference
+                              ref = FirebaseHelper().storage.ref().child(
+                                  'user_images/${FirebaseHelper().auth.currentUser!.uid}.jpg');
+
+                              setState(() {
+                                // Trigger rebuild with the new image
+                              });
                             }
-                            if (img != null)
-                              FirebaseHelper().updateProfileImage(img!);
-                            setState(() {});
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             LucideIcons.pen,
                             color: Colors.white,
                           ),
@@ -107,13 +117,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 editable: false,
                 title: 'Email',
                 onTap: () {},
-                body: FirebaseHelper().auth.currentUser?.email ?? '',
+                body: FirebaseHelper().auth.currentUser?.email ??
+                    'No data retrived',
               ),
               FutureBuilder<String?>(
                 future: FirebaseHelper().getCurrentUserFullName(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
@@ -141,7 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 future: FirebaseHelper().getCurrentUserPhoneNumber(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {

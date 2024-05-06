@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:sleep_manager/features/home/logic/cubit/db_cubit.dart';
 import 'package:sleep_manager/features/home/logic/cubit/sleep_now_cubit.dart';
 import 'package:sleep_manager/features/home/logic/cubit/wanted_time_to_wake_cubit.dart';
 import 'package:sleep_manager/features/home/ui/widgets/avatar_name_advice.dart';
-import 'package:sleep_manager/features/home/ui/widgets/goal_container.dart';
+import 'package:sleep_manager/features/home/ui/widgets/weather_container.dart';
 import 'package:sleep_manager/features/home/ui/widgets/home_tile.dart';
+import 'package:sleep_manager/features/weather/logic/bloc/weather_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 extension DateTimeExtension on DateTime {
@@ -26,14 +28,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Uri url = Uri.parse('https://www.sleepfoundation.org/stages-of-sleep');
+  late String wantedTimeTowake;
 
   Future<void> openUrl() async {
     if (!await launchUrl(url)) {
       throw Exception('Could not launch $url');
     }
   }
-
-  late String wantedTimeTowake;
 
   Future<void> updateTimes() async {
     final times = await context.read<DbCubit>().getSleepAndWakeTimes();
@@ -44,13 +45,6 @@ class _HomeState extends State<Home> {
     context
         .read<WantedTimeToWakeCubit>()
         .setTimeFirebase(times['wakeAtTime'] ?? 'Not set');
-  }
-
-  @override
-  void initState() {
-    wantedTimeTowake = context.read<WantedTimeToWakeCubit>().state;
-    updateTimes();
-    super.initState();
   }
 
   void wakeAt() {
@@ -82,17 +76,56 @@ class _HomeState extends State<Home> {
         DateFormat.jm().format(DateTime.now().applied(TimeOfDay.now())));
   }
 
+  void _fetchWeather() async {
+    try {
+      // Request permission to access location
+      LocationPermission permission = await Geolocator.requestPermission();
+
+      if (permission == LocationPermission.denied) {
+        // Handle denied permission
+        print('Location permission denied');
+        return;
+      }
+
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      context.read<WeatherBlocBloc>().add(FetchWeather(position));
+    } catch (e) {
+      print('Error fetching location: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    wantedTimeTowake = context.read<WantedTimeToWakeCubit>().state;
+    updateTimes();
+    _fetchWeather();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          const AvatarNameAdvice(),
+          AvatarNameAdvice(),
           const SizedBox(
             height: 20,
           ),
-          const GoalContainer(),
+          BlocBuilder<WeatherBlocBloc, WeatherBlocState>(
+            builder: (context, state) {
+              if (state is WeatherBlocLoading) {
+                return const CircularProgressIndicator();
+              } else if (state is WeatherBlocSuccess) {
+                return WeatherContainer(weather: state.weather);
+              } else if (state is WeatherBlocFailure) {
+                return const Text('Failed to load weather data.');
+              } else {
+                return const CircularProgressIndicator();
+              }
+            },
+          ),
           Expanded(
             child: GridView(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -127,7 +160,7 @@ class _HomeState extends State<Home> {
                       openUrl();
                     },
                     icon: LucideIcons.listCollapse,
-                    title: 'About Sleep Cycles',
+                    title: 'About Sleep \n Cycles',
                   ),
                 ),
               ],

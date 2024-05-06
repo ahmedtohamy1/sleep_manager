@@ -1,21 +1,20 @@
-// ignore_for_file: prefer_const_constructors, must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sleep_manager/features/login/logic/cubit/cubit/login_cubit.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:sleep_manager/features/login/logic/cubit/login_cubit.dart';
 import 'package:sleep_manager/features/login/ui/widgets/dont_have_an_account.dart';
 import 'package:sleep_manager/features/login/ui/widgets/forgot_password.dart';
-import 'package:sleep_manager/features/login/ui/widgets/login_button.dart';
-import 'package:sleep_manager/features/login/ui/widgets/email_password_form.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+
   late TextEditingController emailController;
   late TextEditingController passwordController;
   late TextEditingController signupEmailController;
@@ -43,64 +42,106 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                children: const [
-                  Text(
-                    'Welcome back! ',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 30,
+                ),
+                const Row(
+                  children: [
+                    Text(
+                      'Welcome back! ',
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Text(
-                    "Login",
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              EmailPasswordForm(
-                  emailController: emailController,
-                  passwordController: passwordController),
-              SizedBox(
-                height: 16,
-              ),
-              LoginButton(
-                emailController: emailController,
-                passwordController: passwordController,
-                onPressed: () {
-                  context
-                      .read<LoginCubit>()
-                      .login(emailController.text, passwordController.text);
-                },
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              DontHaveAnAccount(
-                signupEmailController: signupEmailController,
-                signupPasswordController: signupPasswordController,
-                signupNameController: signupNameController,
-                signupNumberController: signupNumberController,
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              ForgotPassword(
-                forgotPasswordEmailController: forgotPasswordEmailController,
-              )
-            ],
+                    Text(
+                      "Login",
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                ShadInputFormField(
+                  controller: emailController,
+                  description: const Text("Enter Your Email Address"),
+                  label: const Text("Email Address"),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter your email';
+                    } else if (!isValidEmail(value)) {
+                      return 'Please enter a valid email';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                ShadInputFormField(
+                  controller: passwordController,
+                  description: const Text("Enter Your Password"),
+                  label: const Text("Password"),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter your password';
+                    } else if (value.length < 6) {
+                      return 'Password must be at least 6 characters long';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                ShadButton(
+                  width: double.infinity - 50,
+                  size: ShadButtonSize.lg,
+                  text: const Text('Login'),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      context.read<LoginCubit>().login(
+                            emailController.text,
+                            passwordController.text,
+                          );
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                DontHaveAnAccount(
+                  signupEmailController: signupEmailController,
+                  signupPasswordController: signupPasswordController,
+                  signupNameController: signupNameController,
+                  signupNumberController: signupNumberController,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                ForgotPassword(
+                  forgotPasswordEmailController: forgotPasswordEmailController,
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  bool isValidEmail(String email) {
+    final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegExp.hasMatch(email);
   }
 }

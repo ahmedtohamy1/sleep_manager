@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -6,6 +7,9 @@ import 'package:sleep_manager/features/home/logic/cubit/sleep_now_cubit.dart';
 import 'package:sleep_manager/features/home/logic/cubit/wanted_time_to_wake_cubit.dart';
 import 'package:sleep_manager/features/home/ui/screens/alarm_screen.dart';
 import 'package:sleep_manager/features/home/ui/widgets/clear_wake_time.dart';
+import 'package:sleep_manager/features/profile/ui/screens/profile_screen.dart';
+
+import '../../../../core/helpers/firebase_helper.dart';
 
 class AvatarNameAdvice extends StatefulWidget {
   const AvatarNameAdvice({
@@ -36,15 +40,45 @@ class _AvatarNameAdviceState extends State<AvatarNameAdvice> {
       updateTimes();
     }
 
+    Reference ref = FirebaseHelper()
+        .storage
+        .ref()
+        .child('user_images/${FirebaseHelper().auth.currentUser!.uid}.jpg');
+
+    Future<String> getUrl() async {
+      String imageUrl = await ref.getDownloadURL();
+      return imageUrl;
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
           children: [
-            const CircleAvatar(
-                radius: 35,
-                backgroundImage: NetworkImage(
-                    'https://t4.ftcdn.net/jpg/00/96/48/11/360_F_96481143_EDJRxhplkTUrdgXE4R45XAX0cHFr8QTC.jpg')),
+            FutureBuilder<String>(
+              future: getUrl(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ProfileScreen()));
+                    },
+                    child: CircleAvatar(
+                      radius: 35,
+                      backgroundImage: NetworkImage(snapshot.data!),
+                      child: const Align(
+                        alignment: Alignment.bottomCenter,
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
             const SizedBox(
               width: 15,
             ),

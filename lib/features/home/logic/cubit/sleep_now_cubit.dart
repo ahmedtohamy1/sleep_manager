@@ -8,10 +8,10 @@ class SleepNowCubit extends Cubit<String> {
 
   setSleepNowTime() {
     emit(DateFormat.jm().format(DateTime.now().applied(TimeOfDay.now())));
-  }
+  } // return string = 4:50 AM -PM
 
   setTimeFirebase(String time) {
-    emit(time);
+    emit(time); // CUBIT = 00000
   }
 
   void clearSleepNowTime() {
@@ -48,7 +48,7 @@ class SleepNowCubit extends Cubit<String> {
 
   String addTime(String dateTime, int hrs, int mins) {
     // Split the time string
-    List<String> parts = dateTime.split(':');
+    List<String> parts = dateTime.split(':'); // 8:16 PM 8  16
     int hour = int.parse(parts[0]);
     int minute = int.parse(parts[1].split(' ')[0]);
     bool isPM = parts[1].contains('PM');

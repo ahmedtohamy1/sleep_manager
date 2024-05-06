@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:sleep_manager/features/login/logic/cubit/cubit/login_cubit.dart';
+import 'package:sleep_manager/features/login/logic/cubit/login_cubit.dart';
 
 class ForgotPasswordWidget {
   Future<dynamic> ForgotPasswordDialog(

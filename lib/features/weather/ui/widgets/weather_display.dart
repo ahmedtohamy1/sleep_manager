@@ -190,7 +190,7 @@ class WeatherDisplay extends StatelessWidget {
                               ),
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ],
