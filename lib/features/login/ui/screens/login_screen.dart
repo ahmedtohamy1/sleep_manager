@@ -36,6 +36,18 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    forgotPasswordEmailController.dispose();
+    signupEmailController.dispose();
+    signupPasswordController.dispose();
+    signupNameController.dispose();
+    signupNumberController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,

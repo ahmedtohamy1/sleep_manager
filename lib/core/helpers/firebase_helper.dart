@@ -258,6 +258,4 @@ class FirebaseHelper {
       }
     });
   }
-
-  // get current User
 }

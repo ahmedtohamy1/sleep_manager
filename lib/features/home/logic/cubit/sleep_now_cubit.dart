@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:sleep_manager/features/home/ui/screens/home.dart';
 
 class SleepNowCubit extends Cubit<String> {
-  SleepNowCubit() : super('No alarms');
+  SleepNowCubit() : super('no alarms');
 
   setSleepNowTime() {
     emit(DateFormat.jm().format(DateTime.now().applied(TimeOfDay.now())));

@@ -41,10 +41,10 @@ class _HomeState extends State<Home> {
 
     context
         .read<SleepNowCubit>()
-        .setTimeFirebase(times['SleepNow'] ?? 'Not set');
+        .setTimeFirebase(times['SleepNow'] ?? 'no alarms');
     context
         .read<WantedTimeToWakeCubit>()
-        .setTimeFirebase(times['wakeAtTime'] ?? 'Not set');
+        .setTimeFirebase(times['wakeAtTime'] ?? 'no alarms');
   }
 
   void wakeAt() {
@@ -109,7 +109,7 @@ class _HomeState extends State<Home> {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          AvatarNameAdvice(),
+          const AvatarNameAdvice(),
           const SizedBox(
             height: 20,
           ),

@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:sleep_manager/features/home/ui/screens/home.dart';
 
 class WantedTimeToWakeCubit extends Cubit<String> {
-  WantedTimeToWakeCubit() : super('No alarms');
+  WantedTimeToWakeCubit() : super('no alarms');
 
   setWantedTimeToWake(TimeOfDay pickedTime) {
     emit(DateFormat.jm().format(DateTime.now().applied(pickedTime)));

@@ -23,23 +23,6 @@ class AvatarNameAdvice extends StatefulWidget {
 class _AvatarNameAdviceState extends State<AvatarNameAdvice> {
   @override
   Widget build(BuildContext context) {
-    Future<void> updateTimes() async {
-      final times = await context.read<DbCubit>().getSleepAndWakeTimes();
-
-      context
-          .read<SleepNowCubit>()
-          .setTimeFirebase(times['SleepNow'] ?? 'Not set');
-      context
-          .read<WantedTimeToWakeCubit>()
-          .setTimeFirebase(times['wakeAtTime'] ?? 'Not set');
-    }
-
-    @override
-    void initState() {
-      super.initState();
-      updateTimes();
-    }
-
     Reference ref = FirebaseHelper()
         .storage
         .ref()
@@ -101,9 +84,25 @@ class _AvatarNameAdviceState extends State<AvatarNameAdvice> {
         InkWell(
           splashColor: Colors.transparent,
           onTap: () {
-            if (context.read<WantedTimeToWakeCubit>().state != 'No Alarm') {
+            if (context.read<WantedTimeToWakeCubit>().state.toLowerCase() !=
+                    'no alarms' ||
+                context.read<SleepNowCubit>().state.toLowerCase() !=
+                    'no alarms') {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const AlarmScreen()));
+            } else if (context
+                        .read<WantedTimeToWakeCubit>()
+                        .state
+                        .toLowerCase() ==
+                    'no alarms' ||
+                context.read<SleepNowCubit>().state.toLowerCase() ==
+                    'no alarms') {
+              ShadToaster.of(context).show(
+                const ShadToast(
+                  title: Text('No Alarm Set'),
+                  description: Text('Please set an alarm to view it'),
+                ),
+              );
             } else {
               ShadToaster.of(context).show(
                 const ShadToast(
