@@ -12,7 +12,7 @@ import 'package:sleep_manager/features/settings/ui/screens/settings_screen.dart'
 import 'package:sleep_manager/loginorhome.dart';
 
 class ProfileScreen extends StatefulWidget {
-  ProfileScreen({Key? key});
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -188,7 +188,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
       builder: (context) => ShadDialog(
         title: Text(title),
         description: Text(desc),
-        content: Container(
+        actions: [
+          ShadButton(
+            child: const Text('Save changes'),
+            onPressed: () async {
+              // Call the provided function with the updated name
+              await func(Contrlr.text);
+              Navigator.of(context).pop();
+              setState(() {});
+            },
+          )
+        ],
+        child: Container(
           width: 375,
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: Column(
@@ -216,17 +227,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
         ),
-        actions: [
-          ShadButton(
-            text: const Text('Save changes'),
-            onPressed: () async {
-              // Call the provided function with the updated name
-              await func(Contrlr.text);
-              Navigator.of(context).pop();
-              setState(() {});
-            },
-          )
-        ],
       ),
     );
   }

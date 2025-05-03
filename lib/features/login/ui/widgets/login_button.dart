@@ -18,7 +18,7 @@ class LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShadButton(
       size: ShadButtonSize.lg,
-      text: const Text(
+      child: const Text(
         'Login',
         style: TextStyle(
           fontSize: 17,

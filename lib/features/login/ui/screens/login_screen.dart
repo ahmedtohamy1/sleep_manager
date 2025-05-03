@@ -119,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ShadButton(
                   width: double.infinity - 50,
                   size: ShadButtonSize.lg,
-                  text: const Text('Login'),
+                  child: const Text('Login'),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       context.read<LoginCubit>().login(

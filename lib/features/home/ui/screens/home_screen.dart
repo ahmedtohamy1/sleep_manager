@@ -36,14 +36,14 @@ class _HomeScreenState extends State<HomeScreen> {
           items: const [
             BottomNavigationBarItem(
               icon: Icon(
-                LucideIcons.home,
+                Icons.home,
                 size: 35,
               ),
               label: 'Home',
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                LucideIcons.cloudFog,
+                Icons.cloud,
                 size: 30,
               ),
               label: 'Weather',

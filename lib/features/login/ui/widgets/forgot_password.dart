@@ -13,7 +13,7 @@ class ForgotPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ShadAlert(
-      iconSrc: LucideIcons.refreshCcwDot,
+      icon: const Icon(Icons.question_mark),
       title: const Text('Forgot Password?!'),
       description: Row(
         children: [

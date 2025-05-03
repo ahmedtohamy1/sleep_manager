@@ -20,7 +20,7 @@ class DontHaveAnAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ShadAlert(
-      iconSrc: LucideIcons.messageCircleQuestion,
+      icon: const Icon(Icons.question_mark),
       title: const Text('Do not have an account?!'),
       description: Row(
         children: [

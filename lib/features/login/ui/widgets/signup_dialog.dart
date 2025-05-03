@@ -20,8 +20,7 @@ class Signup {
       context: context,
       builder: (context) => ShadDialog(
         title: const Text('SignUp New User'),
-        description: const Text("Make new account in app."),
-        content: Container(
+        description: Container(
           width: 375,
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: Column(
@@ -105,7 +104,7 @@ class Signup {
         ),
         actions: [
           ShadButton(
-            text: const Text('Pick Image'),
+            child: const Text('Pick Image'),
             onPressed: () async {
               // Open file picker or camera
               var pickedFile = await ImagePicker().pickImage(
@@ -118,7 +117,7 @@ class Signup {
             },
           ),
           ShadButton(
-            text: const Text('Save changes'),
+            child: const Text('Save changes'),
             onPressed: () async {
               if (emailContrlr.text.isNotEmpty &&
                   passContrlr.text.isNotEmpty &&

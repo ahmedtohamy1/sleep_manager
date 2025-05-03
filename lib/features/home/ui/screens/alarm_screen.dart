@@ -39,7 +39,7 @@ class AlarmScreen extends StatelessWidget {
                             top: 0,
                             left: 0,
                             child: ShadBadge.secondary(
-                              text: Text('Wake At Alarms'),
+                              child: Text('Wake At Alarms'),
                             )),
                         Row(
                           children: [

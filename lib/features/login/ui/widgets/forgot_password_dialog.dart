@@ -12,8 +12,7 @@ class ForgotPasswordWidget {
       context: context,
       builder: (context) => ShadDialog(
         title: const Text('Reset Your Password'),
-        // description: const Text("Make new account in app."),
-        content: Container(
+        description: Container(
           width: 375,
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: Column(
@@ -42,7 +41,7 @@ class ForgotPasswordWidget {
         ),
         actions: [
           ShadButton(
-            text: const Text('Save changes'),
+            child: const Text('Save changes'),
             onPressed: () {
               context.read<LoginCubit>().forgotPassword(emailContrlr.text);
               Navigator.of(context).pop();

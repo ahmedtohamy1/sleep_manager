@@ -30,7 +30,7 @@ class SleepNowAlarms extends StatelessWidget {
                     top: 0,
                     left: 0,
                     child: ShadBadge.secondary(
-                      text: Text('Sleep Now Alarms'),
+                      child: Text('Sleep Now Alarms'),
                     )),
                 Row(
                   children: [

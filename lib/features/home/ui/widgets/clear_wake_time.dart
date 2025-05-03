@@ -20,11 +20,11 @@ class ClearWakeTime {
         ),
         actions: [
           ShadButton.outline(
-            text: const Text('Cancel'),
+            child: const Text('Cancel'),
             onPressed: () => Navigator.of(context).pop(false),
           ),
           ShadButton(
-            text: const Text('Continue'),
+            child: const Text('Continue'),
             onPressed: () {
               context.read<WantedTimeToWakeCubit>().clearWantedTimeToWake();
               context.read<SleepNowCubit>().clearSleepNowTime();
